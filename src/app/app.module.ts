@@ -14,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
-
+import { SpinnerComponent } from './componentes/spinner/spinner.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { environment } from 'src/environments/environment';
     ErrorComponent,
     LoginComponent,
     RegistroComponent,
-    BienvenidoComponent
+    BienvenidoComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { environment } from 'src/environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

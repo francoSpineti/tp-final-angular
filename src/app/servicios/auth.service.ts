@@ -48,6 +48,11 @@ export class AuthService {
     }
   }
 
+  async sendEmailVerification() {
+    await (await this.firebaseAuth.currentUser).sendEmailVerification();
+      //this.router.navigate(['/']);
+  }
+
   async cerrarSesion() {
     await this.firebaseAuth.signOut()
     .then(res=>{

@@ -1,5 +1,5 @@
-$base-bgcolor: #354152;
-$base-color: #7e8ba3;
+$base-bgcolor: rgb(255, 240, 240);
+$base-color: #227aad;
 $base-font-weight: 300;
 $base-font-size: 1rem;
 $base-line-height: 1.5;
@@ -134,7 +134,14 @@ a {
     }
 
     &[type="submit"] {
-      background-image: linear-gradient(160deg, #8ceabb 0%, #378f7b 100%);
+      background-image: linear-gradient(160deg, #227aad 0%, #227aad 100%);
+      color: #fff;
+      margin-bottom: 6rem;
+      width: 100%;
+    }
+
+    &[type="button"] {
+      background-image: linear-gradient(160deg, #227aad 0%, #227aad 100%);
       color: #fff;
       margin-bottom: 6rem;
       width: 100%;
