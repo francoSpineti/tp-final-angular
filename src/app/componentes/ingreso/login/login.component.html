@@ -1,31 +1,39 @@
-<body class="align">
-  <div class="grid align__item">
-    <div class="register">
 
-      <h2>Login</h2>
 
-      <form [formGroup]="formGroup" (ngSubmit)="iniciarSesion()" class="form">
+<!-- aca poner imagen -->
+ <div id="back">
+  <canvas id="canvas" class="canvas-back"></canvas>
+  <div class="backLeft">
+  </div>
+</div>
 
-        <div class="form__field">
-          <input type="email" placeholder="Email" placeholder="Email" formControlName="email">
-          <small class="invalid" *ngIf="formGroup.controls['email'].errors?.required && formGroup.controls['email'].touched">El email es requerido</small>
+<div id="slideBox">
+  <div class="topLayer">
+    <div class="right">
+      <div class="content">
+        <h2>Login</h2>
+        <form id="form-login" [formGroup]="formGroup">
+          <div class="form-element form-stack">
+            <label for="password-login" class="form-label">Email</label>
+            <input id="password-login" type="email" name="email" formControlName="email">
+            <small class="invalid" *ngIf="formGroup.controls['email'].errors?.required && formGroup.controls['email'].touched">El email es requerido</small>
           <small class="invalid" *ngIf="formGroup.controls['email'].errors?.email && formGroup.controls['email'].touched">El formato es invalido</small>
-        </div>
-
-        <div class="form__field">
-          <input type="password" placeholder="Password" formControlName="password">
-          <small class="invalid" *ngIf="formGroup.controls['password'].errors?.required && formGroup.controls['password'].touched">La contraseña es requerida</small>
-        </div>
-
-        <div class="form__field">
-          <input type="submit" (click)="iniciarSesion()" [disabled]="formGroup.invalid" value="Ingresar">
-        </div>
-        <ngx-spinner bdColor="rgba(51,51,51,0.8)" *ngIf="mostrarSpinner" size="medium" color="#fff" type="ball-scale-multiple">
-          <p style="font-size: 20px; color: white">Loading...</p>
-        </ngx-spinner>
-      </form>
-      <p>No estas Registrado? <a routerLink="/registro">Registrarse</a></p>
+          </div>
+          <div class="form-element form-stack">
+            <label for="password-login" class="form-label">Password</label>
+            <input id="password-login" type="password" name="password" formControlName="password">
+            <small class="invalid" *ngIf="formGroup.controls['password'].errors?.required && formGroup.controls['password'].touched">La contraseña es requerida</small>
+          </div>
+          <div class="form-element form-submit">
+            <button id="logIn" class="login" (click)="verificarForm(formGroup.value)" [disabled]="formGroup.invalid">Ingresar</button>
+            <button id="goRight" class="login off" routerLink="/registro">Registro</button>
+          </div>
+          <br>
+          <div *ngIf="spiner">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</body>
-
+</div>

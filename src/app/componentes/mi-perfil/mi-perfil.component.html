@@ -1,0 +1,136 @@
+<app-bienvenido></app-bienvenido>
+<div class="container" style="align-content: center;">
+    <main>
+        <br>
+        <div class="row g-5" [ngSwitch]="perfil">
+            <div class="col-md-7 col-lg-8" *ngSwitchCase="'paciente'">
+                <h4 class="mb-3">Datos</h4>
+                <form class="needs-validation">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="nombre" value={{nombre}} disabled>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" placeholder="Apellido" value={{apellido}} disabled>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="username" class="form-label">Mail</label>
+                            <div class="input-group has-validation">
+                                <input type="email" class="form-control" id="mail" placeholder="mail@ejemplo.com" value={{email}} disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">DNI</label>
+                            <input type="number" class="form-control" id="dni" placeholder="00000000" value={{dni}} disabled>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address2" class="form-label">Edad</label>
+                            <input type="number" class="form-control" id="edad"  placeholder="00" value={{edad}} disabled>
+                        </div>
+                        <div class="col-12">
+                            <label for="address2" class="form-label">Obra Social</label>
+                            <input type="text" class="form-control" id="obraSocial"  placeholder="Ej : Osde" value={{obraSocial}} disabled>
+                        </div>
+                        <div class="col-12">
+                            <label for="exampleFormControlFile1">Foto 1</label>
+                            <img [src]=imagenUno height="200"> <br/>
+                        </div>
+                        <div class="col-12">
+                            <label for="exampleFormControlFile1">Foto 2</label>
+                            <img [src]=imagenDos height="200"> <br/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Especialista -->
+            <div class="col-md-7 col-lg-8" *ngSwitchCase="'especialista'">
+                <h4 class="mb-3">Datos</h4>
+                <form class="needs-validation">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="nombre" value={{nombre}} disabled>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" placeholder="Apellido" value={{apellido}} disabled>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="username" class="form-label">Mail</label>
+                            <div class="input-group has-validation">
+                                <input type="email" class="form-control" id="mail" placeholder="mail@ejemplo.com" value={{email}} disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">DNI</label>
+                            <input type="number" class="form-control" id="dni" placeholder="00000000" value={{dni}} disabled>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address2" class="form-label">Edad</label>
+                            <input type="number" class="form-control" id="edad"  placeholder="00" value={{edad}} disabled>
+                        </div>
+                        <div class="col-12">
+                            <label for="address2" class="form-label">Especialidades</label>
+                            <input type="text" class="form-control" id="obraSocial" value={{especialidad}} disabled>
+                        </div>
+                        <div class="col-12">
+                            <label for="exampleFormControlFile1">Foto</label>
+                            <img [src]=imagen height="200"> <br/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Administrador -->
+            <div class="col-md-7 col-lg-8" *ngSwitchCase="'administrador'">
+                <h4 class="mb-3">Datos</h4>
+                <form class="needs-validation">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="nombre" value={{nombre}} disabled>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" placeholder="Apellido" value={{apellido}} disabled>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="username" class="form-label">Mail</label>
+                            <div class="input-group has-validation">
+                                <input type="email" class="form-control" id="mail" placeholder="mail@ejemplo.com" value={{email}} disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">DNI</label>
+                            <input type="number" class="form-control" id="dni" placeholder="00000000" value={{dni}} disabled>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address2" class="form-label">Edad</label>
+                            <input type="number" class="form-control" id="edad"  placeholder="00" value={{edad}} disabled>
+                        </div>
+                        <div class="col-12">
+                            <label for="exampleFormControlFile1">Imagen</label>
+                            <img [src]=imagenAdm height="200"> <br/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </main>
+</div>

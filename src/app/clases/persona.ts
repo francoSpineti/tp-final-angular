@@ -1,14 +1,16 @@
 export class Persona {
 
-    protected nombre !: string;
-    protected apellido !: string;
-    protected edad !: number;
-    protected dni !: number;
-    protected mail !: string;
-    protected password !: string;
-    protected perfil !: string;
+    public id !: string;
+    public nombre !: string;
+    public apellido !: string;
+    public edad !: number;
+    public dni !: number;
+    public mail !: string;
+    public password !: string;
+    public perfil !: string;
 
-    constructor(nombre : string, apellido : string, edad : number, dni : number, mail : string, password : string, perfil : string){
+    constructor(id ?: string,nombre ?: string, apellido ?: string, edad ?: number, dni ?: number, mail ?: string, password ?: string, perfil ?: string){
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -16,6 +18,10 @@ export class Persona {
         this.mail = mail;
         this.password = password;
         this.perfil = perfil;
+    }
+
+    public getID(){
+        return this.id;
     }
 
     public getNombre(){
@@ -45,5 +51,4 @@ export class Persona {
     public getPerfil(){
         return this.perfil;
     }
-
 }

@@ -1,0 +1,60 @@
+<app-bienvenido></app-bienvenido>
+
+  <div id="select">
+    <h3>Seleccionar especialidad</h3>
+
+    <select [(ngModel)]="especialidad" (change)="verOpcion()" class="form-select" aria-label="Default select example">
+      <option  *ngFor="let aux of especialidades" >{{aux}}</option>
+    </select>
+  </div>
+
+  <div *ngIf="especialidad">
+   <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Dia</th>
+            <th scope="col">Horario Entrada</th>
+            <th scope="col">Horario Salida</th>
+            <th scope="col">Inicio Brake</th>
+            <th scope="col">Fin Brake</th>
+            <th scope="col">Activo</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr *ngFor="let aux of dataSource; let i=index">
+            <th scope="row">{{aux.dia}}</th>
+            <td>
+              <select class="form-select" [(ngModel)]="aux.horarioEntrada">
+                <option [value]="lista" *ngFor="let lista of listaHorarios;">{{lista}}</option>
+              </select>
+            </td>
+            <td>
+              <select class="form-select" [(ngModel)]="aux.horarioSalida">
+                <option [value]="lista" *ngFor="let lista of listaHorarios">{{lista}}</option>
+              </select>
+            </td>
+            <td>
+              <select class="form-select" [(ngModel)]="aux.inicioBrake">
+                <option [value]="lista" *ngFor="let lista of listaHorarios">{{lista}}</option>
+              </select>
+            </td>
+            <td>
+              <select class="form-select" [(ngModel)]="aux.finBrake">
+                <option [value]="lista" *ngFor="let lista of listaHorarios">{{lista}}</option>
+              </select>
+            </td>
+            <td>
+              <select class="form-select" [(ngModel)]="aux.activo">
+                <option [value]="true">Activo</option>
+                <option [value]="false">Inactivo</option>
+              </select>
+            </td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-success" *ngIf="mostrarBotonGuardar" (click)="guardarHorarios()">Guardar Horarios</button>
+    <button type="button" class="btn btn-success" *ngIf="!mostrarBotonGuardar" (click)="modificarHorarios()">Modificar Horarios</button>
+  </div>

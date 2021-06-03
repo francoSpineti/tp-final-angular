@@ -2,55 +2,97 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Especialista } from '../clases/especialista';
+import { Paciente } from '../clases/paciente';
 import { Persona } from '../clases/persona';
+import { UsuarioService } from './usuario.service';
+import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
+import Swal from 'sweetalert2';
+import { Administrador } from '../clases/administrador';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  data !: AngularFirestoreCollection<any>;
-  usuariosEnLinea !: Observable<any[]>;
+  constructor(public firebaseAuth : AngularFireAuth, public router: Router,private afs: AngularFirestore,
+    private usuarioService : UsuarioService,private storage: AngularFireStorage) { }
 
-  constructor(public firebaseAuth : AngularFireAuth, public router: Router,private afs: AngularFirestore) { }
+  login(email : string, password : string){
+    return this.firebaseAuth.signInWithEmailAndPassword(email,password);
+  }
 
-  async iniciarSesion(email : string, contraseña : string){
-     await this.firebaseAuth.signInWithEmailAndPassword(email, contraseña)
-    .then(res =>{
-      localStorage.setItem('user',JSON.stringify(res.user));
-      this.router.navigate(['/bienvenido']);
-    },
-    error => alert("Error al iniciar sesion.")
-    );
+  getUser(email : string, uid : any){
+    return this.afs.collection('usuarios').doc(uid).get();
   }
 
   async registrarse(persona : Persona) {
-      const user = await this.firebaseAuth.createUserWithEmailAndPassword(persona.getMail(), persona.getPassword())
-      .then(res=>{
-        console.log("usuario despues del await: " + user);
-        console.log("res despues del await: " + res);
-        console.log("res.user despues del await: " + res.user);
+    
+    if(persona instanceof Paciente){
+      this.crearPaciente(persona);
+    }
+    if(persona instanceof Especialista){
+      this.crearEspecialista(persona);
+    }
 
-        localStorage.setItem('user',JSON.stringify(res.user));
-        this.router.navigate(['/bienvenido']);
-      },
-       error => alert("Error al registrar el usuario.")
-      );
-  }
-
-  //para grabar la coleccion en la base
-  private checkUser(persona : Persona){
-    if(persona.getPerfil().toLowerCase() === "paciente"){
-      
-    }else{ //especialista
-
+    if(persona instanceof Administrador){
+      this.crearAdministrador(persona);
     }
   }
 
-  async sendEmailVerification() {
-    await (await this.firebaseAuth.currentUser).sendEmailVerification();
-      //this.router.navigate(['/']);
+  private async crearPaciente(persona : Paciente){
+
+    await this.firebaseAuth.createUserWithEmailAndPassword(persona.getMail(), persona.getPassword())
+      .then(res=>{
+        let obj = localStorage.getItem('user');
+        if(obj != null){
+          this.sendEmailVerification(res.user);
+          persona.setID(res.user.uid); //seteo id
+          this.usuarioService.guardarPersona(persona.toJson(),res.user.uid);
+          this.mostrarMensaje("Se creo el paciente correctamente!","haga click para continuar.");
+          this.router.navigate(['/verUsuarios']);
+        }else{
+          this.sendEmailVerification(res.user);
+          persona.setID(res.user.uid); //seteo id
+          this.usuarioService.guardarPersona(persona.toJson(),res.user.uid);
+          this.mostrarMensaje("Se creo el paciente correctamente!","haga click para continuar.");
+          this.router.navigate(['/']);
+        }
+      }).catch( error => this.mostrarMensajeError(error.message));
+  }
+
+  private async crearEspecialista(persona : Especialista){
+    await this.firebaseAuth.createUserWithEmailAndPassword(persona.getMail(), persona.getPassword())
+    .then(res=>{
+      let obj = localStorage.getItem('user');
+      if(obj != null){
+        this.sendEmailVerification(res.user);
+        persona.setID(res.user.uid); //seteo id
+        this.usuarioService.guardarPersona(persona.toJson(),res.user.uid);
+        this.mostrarMensaje("Se creo un especialista con exito.","haga click para continuar");
+        this.router.navigate(['/verUsuarios']);
+      }else{
+        this.sendEmailVerification(res.user);
+        persona.setID(res.user.uid); //seteo id
+        this.usuarioService.guardarPersona(persona.toJson(),res.user.uid);
+        this.mostrarMensaje("Se creo un especialista con exito.","haga click para continuar");
+        this.router.navigate(['/']);
+      }
+    }).catch( error => console.log('error',error.message));
+  }
+
+  private async crearAdministrador(persona : Administrador){
+    await this.firebaseAuth.createUserWithEmailAndPassword(persona.getMail(), persona.getPassword())
+    .then(res=>{
+      persona.setID(res.user.uid); //seteo id
+      this.usuarioService.guardarPersona(persona.toJson(),res.user.uid);
+      this.mostrarMensaje("Se creo un administrador con exito.","haga click para continuar");
+      this.router.navigate(['/verUsuarios']);
+    }).catch( error => console.log('error',error.message));
+  }
+
+  async sendEmailVerification(user : any) {
+    return await user.sendEmailVerification();
   }
 
   async cerrarSesion() {
@@ -76,8 +118,19 @@ export class AuthService {
     return retorno;
   }
 
-  currentUser(){
-    return this.firebaseAuth.currentUser;
+  mostrarMensaje(titulo : string,mensaje : string){
+    Swal.fire(
+       titulo,
+       mensaje,
+      'success'
+    )
+  }
+
+  mostrarMensajeError(mensaje : string){
+    Swal.fire({
+      icon: 'error',
+      title: mensaje
+    })
   }
 
 }

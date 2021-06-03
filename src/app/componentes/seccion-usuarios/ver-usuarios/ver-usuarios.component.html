@@ -1,0 +1,35 @@
+<app-bienvenido></app-bienvenido>
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered" >
+          <thead>
+            <tr>
+              <th scope="col">Nombre Completo</th>
+              <th scope="col">Edad</th>
+              <th scope="col">Email</th>
+              <th scope="col">Perfil</th>
+              <th scope="col">Especialidades</th>
+              <!-- <th scope="col">Imagen</th> -->
+              <th scope="col">Verificado</th>
+              <th scope="col">DesHabilitar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let aux of data">
+              <th scope="row">{{aux.nombre}}  {{aux.apellido}}</th>
+              <td>{{aux.edad}}</td>
+              <td>{{aux.email}}</td>
+              <td>{{aux.perfil}}</td>
+              <td>{{aux.especialidad}}</td>
+              <!-- <td>{{aux.imagen}}</td> -->
+              <td>{{aux.emailVerificadoPorAdmin == false? "NO" : "SI" }}</td>
+              <td>
+              <button type="button" (click)="habilitar(aux)" class="btn btn-danger" *ngIf="aux.emailVerificadoPorAdmin!=null">{{aux.emailVerificadoPorAdmin == false? "Habilitar" : "Deshabilitar"}}<i class="far fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
